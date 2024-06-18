@@ -7,7 +7,7 @@ const Searchbar = () => {
       <input
         type="text"
         placeholder="Search todos"
-        className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-200 rounded mb-2"
+        className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-200 focus:outline-none focus:ring focus:border-cyan-500 rounded mb-2"
       />
     </section>
   );
