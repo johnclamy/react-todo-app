@@ -5,16 +5,16 @@ const Navbar = () => {
         MyTodos
       </a>
       <div className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-        <a className="mr-5 capitalize" href="/">
+        <a className="mr-5 capitalize hover:bg-slate-100" href="/">
           home
         </a>
-        <a className="mr-5 capitalize" href="/">
+        <a className="mr-5 capitalize hover:bg-slate-100" href="/">
           shop
         </a>
-        <a className="mr-5 capitalize" href="/">
+        <a className="mr-5 capitalize hover:bg-slate-100" href="/">
           about
         </a>
-        <a className="mr-5 capitalize" href="/">
+        <a className="mr-5 capitalize hover:bg-slate-100" href="/">
           contact
         </a>
       </div>
