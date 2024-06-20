@@ -7,7 +7,7 @@ type TodosProp = {
 
 const TodoList = ({ todos }: TodosProp): ReactElement => {
   return (
-    <ul className="max-w-md mb-8 space-y-1 text-gray-500 list-inside">
+    <ul className="max-w-md mb-8 ml-2 sm:ml-0 space-y-1 text-gray-500 list-inside">
       {todos.map((todoItem) => (
         <TodoItem key={todoItem.id} todoItem={todoItem} />
       ))}
