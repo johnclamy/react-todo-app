@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import listIcon from "../assets/listIcon.svg";
+import ListIcon from "./ListIcon";
 
 export type TodoProp = {
   id: number;
@@ -10,7 +10,7 @@ export type TodoProp = {
 
 const TodoItem = ({ todoItem }: { todoItem: TodoProp }): ReactElement => (
   <li className="flex items-center py-1">
-    <img className="size-5 mr-2" src={listIcon} alt="" />
+    <ListIcon colour="#2AAA8A" />
     {todoItem.todo}
   </li>
 );
