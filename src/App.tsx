@@ -25,6 +25,11 @@ export default function App(): ReactElement {
     setTodos([...todos, todo]);
   };
 
+  const handleDelTodo = (todoId: number) => {
+    const newTodos: TodoProp[] = todos.filter((todo) => todo.id !== todoId);
+    setTodos(newTodos);
+  };
+
   const renderTodos = !todos.length ? (
     <section className="flex justify-center my-8 mx-2 sm:mx-0 bg-yellow-50 border-spacing-2 border-yellow-100 rounded-md p-3 sm:p-5">
       <p className="text-lg text-gray-500 md:text-xl text-center">
@@ -32,7 +37,11 @@ export default function App(): ReactElement {
       </p>
     </section>
   ) : (
-    <TodoList todos={todos} searchTerm={searchTerm} />
+    <TodoList
+      todos={todos}
+      searchTerm={searchTerm}
+      onDeleteTodo={handleDelTodo}
+    />
   );
 
   return (
