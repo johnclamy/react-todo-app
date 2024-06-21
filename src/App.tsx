@@ -6,7 +6,6 @@ import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import { TodoProp } from "./components/TodoItem";
 import defaultTodos from "./assets/initialData.json";
-import "./App.css";
 
 export default function App(): ReactElement {
   const [todos, setTodos] = useState<TodoProp[]>(
