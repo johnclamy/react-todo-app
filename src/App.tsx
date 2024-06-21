@@ -12,6 +12,7 @@ export default function App(): ReactElement {
   const [todos, setTodos] = useState<TodoProp[]>(
     defaultTodos || ([] as TodoProp[])
   );
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleAddTodo = (text: string) => {
     const count = todos.length;
@@ -32,15 +33,15 @@ export default function App(): ReactElement {
       </p>
     </section>
   ) : (
-    <TodoList todos={todos} />
+    <TodoList todos={todos} searchTerm={searchTerm} />
   );
 
   return (
-    <div>
+    <>
       <Navbar />
       <Header />
       <main className="container mx-auto max-w-96">
-        <Searchbar />
+        <Searchbar searchTerm={searchTerm} onSetSearchTerm={setSearchTerm} />
         <AddTodo onAddTodo={handleAddTodo} />
         <hr className="h-px my-8 bg-gray-200 border-2" />
         <h2 className="mb-3 mx-2 sm:mx-0 text-lg capitalize font-semibold text-gray-900">
@@ -48,6 +49,6 @@ export default function App(): ReactElement {
         </h2>
         {renderTodos}
       </main>
-    </div>
+    </>
   );
 }
