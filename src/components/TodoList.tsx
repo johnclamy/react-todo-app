@@ -1,14 +1,16 @@
 import { ReactElement } from "react";
 import TodoItem, { TodoProp } from "./TodoItem";
+import searchListBy from "../helper/searchListBy";
 
-type TodosProp = {
+type TodosProps = {
   todos: TodoProp[];
+  searchTerm: string;
 };
 
-const TodoList = ({ todos }: TodosProp): ReactElement => {
+const TodoList = ({ todos, searchTerm }: TodosProps): ReactElement => {
   return (
     <ul className="max-w-md mb-8 ml-2 sm:ml-0 space-y-1 text-gray-500 list-inside">
-      {todos.map((todoItem) => (
+      {todos.filter(searchListBy(searchTerm)).map((todoItem) => (
         <TodoItem key={todoItem.id} todoItem={todoItem} />
       ))}
     </ul>
