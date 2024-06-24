@@ -4,6 +4,7 @@ import searchListBy from "../helper/searchListBy";
 
 type TodosProps = {
   todos: TodoProp[];
+  isEdit: boolean;
   searchTerm: string;
   onDeleteTodo: (todoId: number) => void;
   onEditTodoData: (todo: TodoProp) => void;
@@ -11,6 +12,7 @@ type TodosProps = {
 
 const TodoList = ({
   todos,
+  isEdit,
   searchTerm,
   onDeleteTodo,
   onEditTodoData,
@@ -20,6 +22,7 @@ const TodoList = ({
       {todos.filter(searchListBy(searchTerm)).map((todoItem) => (
         <TodoItem
           key={todoItem.id}
+          isEdit={isEdit}
           todoItem={todoItem}
           onDeleteTodo={onDeleteTodo}
           onEditTodoData={onEditTodoData}

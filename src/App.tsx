@@ -58,6 +58,7 @@ export default function App(): ReactElement {
   ) : (
     <TodoList
       todos={todos}
+      isEdit={isEdit}
       searchTerm={searchTerm}
       onDeleteTodo={handleDelTodo}
       onEditTodoData={handleEditTodoData}
