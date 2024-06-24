@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { MdEdit, /* MdEditOff, */ MdDelete } from "react-icons/md";
+import { MdEdit, MdEditOff, MdDelete } from "react-icons/md";
 import ListIcon from "./ListIcon";
 
 export type TodoProp = {
@@ -11,11 +11,13 @@ export type TodoProp = {
 
 export type TodoProps = {
   todoItem: TodoProp;
+  isEdit: boolean;
   onDeleteTodo: (todoId: number) => void;
   onEditTodoData: (todo: TodoProp) => void;
 };
 
 const TodoItem = ({
+  isEdit,
   todoItem,
   onDeleteTodo,
   onEditTodoData,
@@ -26,23 +28,25 @@ const TodoItem = ({
       {todoItem.todo}
     </div>
     <div className="bg-white p-1 rounded-md grid gap-1">
-      <MdEdit
-        className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-pointer"
-        title="Edit todo"
-        onClick={() =>
-          onEditTodoData({
-            id: todoItem.id,
-            todo: todoItem.todo,
-            completed: todoItem.completed,
-            userId: todoItem.userId,
-          })
-        }
-      />
-      {/* <MdEditOff
-        className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-pointer"
-        title="Editing todo"
-        
-      /> */}
+      {!isEdit ? (
+        <MdEdit
+          className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-pointer"
+          title="Edit todo"
+          onClick={() =>
+            onEditTodoData({
+              id: todoItem.id,
+              todo: todoItem.todo,
+              completed: todoItem.completed,
+              userId: todoItem.userId,
+            })
+          }
+        />
+      ) : (
+        <MdEditOff
+          className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-none"
+          title="Editing todo in progress"
+        />
+      )}
       <MdDelete
         className="text-red-500 border border-red-500 rounded-full m-1 cursor-pointer"
         title="Delete todo"
