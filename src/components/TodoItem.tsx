@@ -12,9 +12,14 @@ export type TodoProp = {
 export type TodoProps = {
   todoItem: TodoProp;
   onDeleteTodo: (todoId: number) => void;
+  onEditTodoData: (todo: TodoProp) => void;
 };
 
-const TodoItem = ({ todoItem, onDeleteTodo }: TodoProps): ReactElement => (
+const TodoItem = ({
+  todoItem,
+  onDeleteTodo,
+  onEditTodoData,
+}: TodoProps): ReactElement => (
   <li className="flex justify-between items-center bg-slate-100 mb-1 p-1 rounded-lg">
     <div className="flex items-center py-1 my-2 mr-2">
       <ListIcon colour="#2AAA8A" />
@@ -24,10 +29,19 @@ const TodoItem = ({ todoItem, onDeleteTodo }: TodoProps): ReactElement => (
       <MdEdit
         className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-pointer"
         title="Edit todo"
+        onClick={() =>
+          onEditTodoData({
+            id: todoItem.id,
+            todo: todoItem.todo,
+            completed: todoItem.completed,
+            userId: todoItem.userId,
+          })
+        }
       />
       {/* <MdEditOff
         className="text-amber-500 border border-amber-500 rounded-full m-1 cursor-pointer"
         title="Editing todo"
+        
       /> */}
       <MdDelete
         className="text-red-500 border border-red-500 rounded-full m-1 cursor-pointer"
