@@ -1,17 +1,42 @@
-import { SyntheticEvent, useState } from "react";
+import { Dispatch, SyntheticEvent, useEffect, useState } from "react";
+import { TodoProp } from "./TodoItem";
 
-type OnAddTodo = {
+type AddTodoProps = {
+  editData?: TodoProp | null;
   onAddTodo: (text: string) => void;
+  isEdit: boolean;
+  setIsEdit: Dispatch<React.SetStateAction<boolean>>;
+  onUpdateTodo: (updatedTodo: TodoProp | null | undefined) => void;
 };
 
-const AddTodo = ({ onAddTodo }: OnAddTodo) => {
+const AddTodo = ({
+  onAddTodo,
+  editData,
+  isEdit,
+  setIsEdit,
+  onUpdateTodo,
+}: AddTodoProps) => {
   const [text, setText] = useState<string>("");
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    onAddTodo(text);
+
+    if (!isEdit) {
+      onAddTodo(text);
+    } else {
+      onUpdateTodo({ ...(editData as TodoProp), todo: text });
+    }
+
     setText("");
+    setIsEdit(false);
   };
+
+  useEffect(() => {
+    if (editData && Object.keys(editData).length !== 0) {
+      setText(editData.todo);
+      setIsEdit(true);
+    }
+  }, [editData]);
 
   return (
     <form
@@ -25,11 +50,16 @@ const AddTodo = ({ onAddTodo }: OnAddTodo) => {
         placeholder="Add a todo..."
         className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-200 focus:outline-none focus:ring focus:border-cyan-500 rounded mb-2"
       />
+
       <button
         type="submit"
-        className="mx-2 sm:mx-0 bg-cyan-600 text-white uppercase hover:bg-cyan-900 active:bg-cyan-700 focus:outline-none focus:ring focus:ring-cyan-300 w-full mt-2 py-2"
+        className={`w-full mt-2 py-2 mx-2 sm:mx-0 uppercase focus:outline-none focus:ring ${
+          !isEdit
+            ? "bg-cyan-600 text-white hover:bg-cyan-900 active:bg-cyan-700 focus:ring-cyan-300"
+            : "bg-yellow-500 text-black hover:bg-yellow-600 active:bg-yellow-700 focus:ring-yellow-300"
+        }`}
       >
-        add
+        {isEdit ? "edit" : "add"}
       </button>
     </form>
   );
