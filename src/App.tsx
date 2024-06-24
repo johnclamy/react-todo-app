@@ -8,9 +8,9 @@ import { TodoProp } from "./components/TodoItem";
 import defaultTodos from "./assets/initialData.json";
 
 export default function App(): ReactElement {
-  const [todos, setTodos] = useState<TodoProp[]>(
-    defaultTodos || ([] as TodoProp[])
-  );
+  const [todos, setTodos] = useState<TodoProp[] | []>(defaultTodos);
+  const [editData, setEditData] = useState<TodoProp | null>(null);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleAddTodo = (text: string) => {
@@ -23,6 +23,25 @@ export default function App(): ReactElement {
       userId: Math.floor(Math.random() * 100) + 1,
     };
     setTodos([...todos, todo]);
+  };
+
+  const handleUpdateTodo = (updatedTodo: TodoProp | null | undefined) => {
+    const itemUpdate = todos.find((todo) => todo.id === updatedTodo?.id);
+    const remainTodos = todos.filter((todo) => todo.id !== updatedTodo?.id);
+
+    if (
+      itemUpdate &&
+      Object.keys(itemUpdate).length !== 0 &&
+      updatedTodo &&
+      Object.keys(updatedTodo).length !== 0
+    ) {
+      setTodos([...remainTodos, { ...itemUpdate, todo: updatedTodo.todo }]);
+      console.log(updatedTodo.todo);
+    }
+  };
+
+  const handleEditTodoData = (editedData: TodoProp) => {
+    setEditData(editedData);
   };
 
   const handleDelTodo = (todoId: number) => {
@@ -41,6 +60,7 @@ export default function App(): ReactElement {
       todos={todos}
       searchTerm={searchTerm}
       onDeleteTodo={handleDelTodo}
+      onEditTodoData={handleEditTodoData}
     />
   );
 
@@ -50,7 +70,13 @@ export default function App(): ReactElement {
       <Header />
       <main className="container mx-auto max-w-96">
         <Searchbar searchTerm={searchTerm} onSetSearchTerm={setSearchTerm} />
-        <AddTodo onAddTodo={handleAddTodo} />
+        <AddTodo
+          editData={editData}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          onAddTodo={handleAddTodo}
+          onUpdateTodo={handleUpdateTodo}
+        />
         <hr className="h-px my-8 bg-gray-200 border-2" />
         <h2 className="mb-3 mx-2 sm:mx-0 text-lg capitalize font-semibold text-gray-900">
           my todo list
