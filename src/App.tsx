@@ -48,6 +48,7 @@ export default function App(): ReactElement {
   const handleDelTodo = (todoId: number) => {
     const newTodos: TodoProp[] = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
+    storedTodos.setData("todo-list", todos);
   };
 
   const handleGetInitialTodos = () => {
