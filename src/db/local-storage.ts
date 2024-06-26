@@ -1,6 +1,6 @@
 type LocalStorage = {
   setData: (title: string, data: unknown) => void;
-  getData: (title: string) => unknown;
+  getData: (title: string) => unknown | boolean;
 };
 
 const storage: LocalStorage = {
@@ -10,8 +10,12 @@ const storage: LocalStorage = {
     }
   },
 
-  getData(title: string): unknown {
-    return localStorage.getItem(title);
+  getData(title: string): unknown | boolean {
+    const data = localStorage.getItem(title);
+    if (data) {
+      return JSON.parse(data);
+    }
+    return false;
   },
 };
 
