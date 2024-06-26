@@ -23,7 +23,9 @@ export default function App(): ReactElement {
       completed: false,
       userId: Math.floor(Math.random() * 100) + 1,
     };
-    setTodos([...todos, todo]);
+    const newTodos = [...todos, todo];
+    setTodos(newTodos);
+    storedTodos.setData("todo-list", newTodos);
   };
 
   const handleUpdateTodo = (updatedTodo: TodoProp | null | undefined) => {
@@ -36,8 +38,12 @@ export default function App(): ReactElement {
       updatedTodo &&
       Object.keys(updatedTodo).length !== 0
     ) {
-      setTodos([...remainTodos, { ...itemUpdate, todo: updatedTodo.todo }]);
-      console.log(updatedTodo.todo);
+      const newTodos = [
+        ...remainTodos,
+        { ...itemUpdate, todo: updatedTodo.todo },
+      ];
+      setTodos(newTodos);
+      storedTodos.setData("todo-list", newTodos);
     }
   };
 
@@ -48,7 +54,7 @@ export default function App(): ReactElement {
   const handleDelTodo = (todoId: number) => {
     const newTodos: TodoProp[] = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
-    storedTodos.setData("todo-list", todos);
+    storedTodos.setData("todo-list", newTodos);
   };
 
   const handleGetInitialTodos = () => {
