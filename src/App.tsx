@@ -7,6 +7,7 @@ import TodoList from "./components/TodoList";
 import { TodoProp } from "./components/TodoItem";
 import { storedTodos } from "./db/local-storage";
 import defaultTodos from "./assets/initialData.json";
+import generateId from "./helper/generateId";
 
 export default function App(): ReactElement {
   const [todos, setTodos] = useState<TodoProp[] | []>([]);
@@ -15,8 +16,7 @@ export default function App(): ReactElement {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleAddTodo = (text: string) => {
-    const count = todos.length;
-    const id = count ? todos[count - 1].id + 1 : count;
+    const id = generateId();
     const todo = {
       id,
       todo: text,
