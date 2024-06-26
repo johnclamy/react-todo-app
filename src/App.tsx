@@ -1,14 +1,15 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Searchbar from "./components/Searchbar";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import { TodoProp } from "./components/TodoItem";
+import { storedTodos } from "./db/local-storage";
 import defaultTodos from "./assets/initialData.json";
 
 export default function App(): ReactElement {
-  const [todos, setTodos] = useState<TodoProp[] | []>(defaultTodos);
+  const [todos, setTodos] = useState<TodoProp[] | []>([]);
   const [editData, setEditData] = useState<TodoProp | null>(null);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -48,6 +49,25 @@ export default function App(): ReactElement {
     const newTodos: TodoProp[] = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
   };
+
+  const handleGetInitialTodos = () => {
+    const localTodos: TodoProp[] | null = storedTodos.getData("todo-list");
+    if (localTodos) {
+      setTodos(localTodos);
+      console.log("okay:", localTodos);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    handleGetInitialTodos();
+    storedTodos.setData("todo-list", defaultTodos);
+    console.log("failed getting initial todos");
+  }, []);
+
+  useEffect(() => {
+    handleGetInitialTodos();
+  }, []);
 
   const renderTodos = !todos.length ? (
     <section className="flex justify-center my-8 mx-2 sm:mx-0 bg-yellow-50 border-spacing-2 border-yellow-100 rounded-md p-3 sm:p-5">
